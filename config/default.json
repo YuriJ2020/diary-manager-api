@@ -1,0 +1,14 @@
+{
+  "database": {
+    "uri": "mongodb://localhost:37017/diary-manager"
+  },
+  "server": {
+    "port": 8888
+  },
+  "security": {
+    "token": {
+      "expireInSec": "3600",
+      "secret": "MY_TOP_SECRET_2021"
+    }
+  }
+}
