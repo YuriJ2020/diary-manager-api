@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const path = require("path");
 
 const connect = require("./database");
+const routes = require("./routes");
 
 // Config values.
 const serverPort = config.get("server.port");
@@ -26,7 +27,7 @@ app.use([
   express.urlencoded(),
   helmet(),
   morgan("combined"),
-  // routes,
+  routes,
 ]);
 
 connect(databaseURI).then(startServer).catch(handleError);
