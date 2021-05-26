@@ -18,9 +18,6 @@ const querySchema = Joi.object({
   datetime: Joi.date().format(defaultFormat),
 });
 
-module.validateCreation = createValidator(creationSchema);
-module.validateQuery = createValidator(querySchema);
-
 const diarySchema = new mongoose.Schema({
   email: {
     type: String,
@@ -42,4 +39,8 @@ const diarySchema = new mongoose.Schema({
 
 const Diary = mongoose.model("Diary", diarySchema);
 
-module.exports = Diary;
+module.exports = {
+  default: Diary,
+  validateCreation: createValidator(creationSchema),
+  validateQuery: createValidator(querySchema),
+};

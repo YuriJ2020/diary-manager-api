@@ -10,12 +10,12 @@ const Diary = require("../models/Diary");
 const expireInSec = config.get("security.token.expireInSec");
 const secret = config.get("security.token.secret");
 
-exports.jwtSignUser = (user) => {
+const jwtSignUser = (user) => {
   const payload = _.pick(user, ["email", "nickname", "password"]);
   return jwt.sign(payload, secret, { expiresIn: `${expireInSec}s` });
 };
 
-exports.jwtVerifyUser = (token) => {
+const jwtVerifyUser = (token) => {
   const decoded = jwt.verify(token, secret);
   const { error, value } = validateDecodedJWT(decoded);
   if (_.isNil(error)) {
@@ -24,8 +24,9 @@ exports.jwtVerifyUser = (token) => {
   throw error;
 };
 
-exports.createValidator = (validateFn) => (req, res, next) => {
+const createValidator = (validateFn) => (req, res, next) => {
   const { body } = req;
+  console.warn("validateFn:", validateFn);
   const { error } = validateFn(body);
   const hasErr = !(_.isNil(error) || _.isEmpty(error.details));
   if (hasErr) {
@@ -35,7 +36,7 @@ exports.createValidator = (validateFn) => (req, res, next) => {
   }
 };
 
-exports.authenticate = async (req, res, log, done) => {
+const authenticate = async (req, res, log, done) => {
   try {
     const JWT = req.get("JWT");
     // Verify the JWT token from request headers.
@@ -68,7 +69,7 @@ exports.authenticate = async (req, res, log, done) => {
   }
 };
 
-exports.locateDiaries = async (body) => {
+const locateDiaries = async (body) => {
   const { datetime, email } = body;
   const date = moment(datetime).utc().toDate();
   const filter = {
@@ -78,7 +79,7 @@ exports.locateDiaries = async (body) => {
   return Diary.find(filter).sort({ datetime: -1 }).exec();
 };
 
-exports.locateDiariesWithQuery = async (_body, query) => {
+const locateDiariesWithQuery = async (_body, query) => {
   const { datetime, email } = query;
   const date = _.isNil(datetime) ? undefined : moment(datetime).utc().toDate();
   const filter = {
@@ -88,7 +89,7 @@ exports.locateDiariesWithQuery = async (_body, query) => {
   return Diary.find(filter).sort({ datetime: -1 }).exec();
 };
 
-exports.processDiaries = async (body, log, process) => {
+const processDiaries = async (body, log, process) => {
   const { datetime, email } = body;
   const diaries = await locateDiaries(body);
   if (_.isEmpty(diaries)) {
@@ -101,4 +102,14 @@ exports.processDiaries = async (body, log, process) => {
     return error;
   }
   return process(diaries);
+};
+
+module.exports = {
+  jwtSignUser,
+  jwtVerifyUser,
+  createValidator,
+  authenticate,
+  locateDiaries,
+  locateDiariesWithQuery,
+  processDiaries,
 };
