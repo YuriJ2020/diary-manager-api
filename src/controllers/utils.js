@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const moment = require("moment");
 
 const { validateDecodedJWT } = require("../models/User");
-const Diary = require("../models/Diary");
+const { default: Diary } = require("../models/Diary");
 
 const expireInSec = config.get("security.token.expireInSec");
 const secret = config.get("security.token.secret");
