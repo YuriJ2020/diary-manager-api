@@ -12,5 +12,5 @@ module.exports = Router()
   // Diary CRUD.
   .get("/api/diary", diary.get)
   .post("/api/diary", diary.validateCreation, diary.post)
-  .put("/api/diary", diary.validateCreation, diary.put);
-// .delete("/api/diary", diary.validateQuery, diary.delete);
+  .put("/api/diary", diary.validateCreation, diary.put)
+  .delete("/api/diary", diary.validateQuery, diary.delete);
