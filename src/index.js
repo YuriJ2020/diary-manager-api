@@ -23,7 +23,7 @@ const app = express();
 
 // Use Express middleware.
 app.use([
-  cors(),
+  cors({ exposedHeaders: "JWT" }),
   express.json(),
   express.urlencoded(),
   helmet(),
