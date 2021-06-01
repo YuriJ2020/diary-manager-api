@@ -4,7 +4,8 @@ const config = require("config");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const path = require("path");
+
+require("dotenv").config();
 
 const connect = require("./database");
 const routes = require("./routes");

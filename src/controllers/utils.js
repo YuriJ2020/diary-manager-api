@@ -8,7 +8,7 @@ const { validateDecodedJWT } = require("../models/User");
 const { default: Diary } = require("../models/Diary");
 
 const expireInSec = config.get("security.token.expireInSec");
-const secret = config.get("security.token.secret");
+const secret = process.env.SECRET;
 
 const jwtSignUser = (user) => {
   const payload = _.pick(user, ["email", "nickname", "password"]);
