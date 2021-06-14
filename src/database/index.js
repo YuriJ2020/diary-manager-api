@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const debug = createDebug("app:database");
 
-const connect = async (uri) => {
+const connect = (uri) => {
   const db = mongoose.connection;
   db.on("error", (args) => debug(`Failed to connect to database; ${args}`));
   db.once("open", () => debug("Database connection opened;"));

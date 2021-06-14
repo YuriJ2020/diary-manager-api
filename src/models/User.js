@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const createValidator = require("./utils");
 
+// Schema for valifying jwt payload
 const jwtSchema = Joi.object({
   email: Joi.string().email().min(3).max(100).required(),
   nickname: Joi.string().min(2).max(50).required(),
@@ -13,11 +14,13 @@ const jwtSchema = Joi.object({
   exp: Joi.number().required(),
 });
 
+// Schema for verfying login payload
 const loginSchema = Joi.object({
   email: Joi.string().email().min(3).max(100).required(),
   password: Joi.string().min(3).max(15).required(),
 });
 
+// Schema for verfying Sign up payload
 const signUpSchema = Joi.object({
   email: Joi.string().email().min(3).max(100).required(),
   nickname: Joi.string().min(2).max(50).required(),
@@ -56,6 +59,8 @@ userSchema.pre("save", function (next) {
       next(err);
     }
   };
+
+  // Hash user password
   if (user.isModified("password")) {
     bcrypt.hash(user.password, user.password.length, callback);
   } else {
@@ -67,6 +72,7 @@ userSchema.methods.validatePassword = async function (plainPass) {
   return bcrypt.compare(plainPass, this.password);
 };
 
+// UserSchema.methods.validatePassword = validatePassword;
 const User = mongoose.model("User", userSchema);
 
 module.exports = {

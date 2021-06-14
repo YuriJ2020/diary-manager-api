@@ -39,10 +39,10 @@ const createValidator = (validateFn) => (req, res, next) => {
 const authenticate = async (req, res, log, done) => {
   try {
     const JWT = req.get("JWT");
-    // Verify the JWT token from request headers.
+    // Verify the JWT token from request headers
     const decoded = jwtVerifyUser(JWT);
     const { body, query } = req;
-    // Verify the email from the JWT token is the same as the email from the request body.
+    // Verify the email from the JWT token is the same as the email from the request body
     if (body.email === decoded.email || query.email === decoded.email) {
       const result = await done(body, query);
       if (result instanceof Document) {
@@ -68,7 +68,7 @@ const authenticate = async (req, res, log, done) => {
     res.status(400).send({ error: err });
   }
 };
-
+// Find diaries with a given date time and email
 const locateDiaries = async (body) => {
   const { datetime, email } = body;
   const date = moment(datetime).utc().toDate();
@@ -76,6 +76,7 @@ const locateDiaries = async (body) => {
     email,
     ...(!_.isNil(datetime) && { datetime: date }),
   };
+  // lazy query
   return Diary.find(filter).sort({ datetime: -1 }).exec();
 };
 
@@ -89,6 +90,7 @@ const locateDiariesWithQuery = async (_body, query) => {
   return Diary.find(filter).sort({ datetime: -1 }).exec();
 };
 
+// Find the diary based on user input and process them with the "process" function
 const processDiaries = async (body, log, process) => {
   const { datetime, email } = body;
   const diaries = await locateDiaries(body);

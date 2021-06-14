@@ -7,12 +7,14 @@ const createValidator = require("./utils");
 
 const Joi = JoiOriginal.extend(JoiDate);
 
+// Schema for diary creatinon payload
 const creationSchema = Joi.object({
   email: Joi.string().email().min(3).max(100).required(),
   datetime: Joi.date().format(defaultFormat).required(),
   message: Joi.string().min(1).max(3000).required(),
 });
 
+// Schema for read diary
 const querySchema = Joi.object({
   email: Joi.string().email().min(3).max(100).required(),
   datetime: Joi.date().format(defaultFormat),

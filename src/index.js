@@ -10,7 +10,7 @@ require("dotenv").config();
 const connect = require("./database");
 const routes = require("./routes");
 
-// Config values.
+// Config values
 const serverPort = config.get("server.port");
 const databaseURI = config.get("database.uri");
 
@@ -21,7 +21,7 @@ const handleError = (err) => debug("Unexpected error;", err);
 
 const app = express();
 
-// Use Express middleware.
+// Use Express middleware
 app.use([
   cors({ exposedHeaders: "JWT" }),
   express.json(),
