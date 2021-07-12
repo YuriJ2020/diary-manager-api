@@ -1,5 +1,9 @@
 # Diary Manager UI
 
+## Endpoint
+
+https://diary-manager-api.herokuapp.com/
+
 ## Heroku Deployment
 
 ```sh
