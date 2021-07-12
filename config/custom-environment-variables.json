@@ -1,5 +1,8 @@
 {
   "database": {
     "uri": "DATABASE_CONNECTION_STRING"
+  },
+  "server": {
+    "port": "PORT"
   }
 }
