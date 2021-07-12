@@ -1,0 +1,13 @@
+{
+  "database": {
+    "uri": "DATABASE_CONNECTION_STRING"
+  },
+  "server": {
+    "port": 443
+  },
+  "security": {
+    "token": {
+      "expireInSec": "3600"
+    }
+  }
+}
