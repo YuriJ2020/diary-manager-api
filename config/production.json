@@ -1,6 +1,6 @@
 {
   "database": {
-    "uri": "DATABASE_CONNECTION_STRING"
+    "uri": "mongodb://localhost:37017/diary-manager"
   },
   "server": {
     "port": 443
